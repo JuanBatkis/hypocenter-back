@@ -12,7 +12,7 @@ const shelterSchema = new Schema(
         },
         building_name: {
             type: String,
-            re: [true, 'Please add a buildings name']
+            re: [true, 'Please add a building name']
         },
         location: {
             type: String,
@@ -22,7 +22,7 @@ const shelterSchema = new Schema(
                 city: {type: String},
                 municipality: {type: String},
                 zipCode: {type: String},
-                streetName: {Number},
+                streetName: {type: String},
                 references: {type: String,}
                 },
             },
@@ -36,22 +36,24 @@ const shelterSchema = new Schema(
             missing:{type:Number},
             deceased:{type:Number},
         }, 
-        need:[ ],
-        offer:[ ],
-        status:['PENDING', 'APPROVED', 'DENIED'],
-        role: {
-            type: String,
-            default: 'USER',
-            enum: ['ADMIN', 'COLAB'],
+        need:{
+            type:Array,
+            required: [false, 'How can we help you?'],
         },
-        password: {
-            type: String,
-            required: [true, 'Please add a password'],
-        }
+        offer:{
+            type:Array,
+            required: [false, 'How can you help us?'],
+        },
+        description:{
+            type:String,
+            required: [false, 'How else can we help you?'],
+        },
+        typeOfReport:['SHELTER', 'DAMAGE'],
+        status:['PENDING', 'APPROVED', 'DENIED'],
     },
     {
         timestamps: true
     }
 );
 
-module.exports = mongoose.model('Colab', shelterSchema);
+module.exports = mongoose.model('EntryShelter', shelterSchema);

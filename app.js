@@ -7,6 +7,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+// Add mongoose to connect with DB
 const mongoose = require('mongoose');
 const cors = require('cors');
 
@@ -26,7 +27,7 @@ const app = express();
 //Use cors to give permission to other apps
 app.use(
     cors({
-        origin: ['http://localhost:3000', 'https://jb-project-back.herokuapp.com'],
+        origin: ['http://localhost:3000'],
         credentials: true,
     })
 )
@@ -43,11 +44,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const propertyRouter = require('./routes/property');
-const reservationRouter = require('./routes/reservation');
+
 
 app.use('/api', indexRouter);
 app.use('/api/user', usersRouter);
-app.use('/api/property', propertyRouter);
+app.use('/api/entry-shelter', propertyRouter);
 app.use('/api/reservation', reservationRouter);
 
 module.exports = app;
