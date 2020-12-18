@@ -12,9 +12,9 @@ const damageSchema = new Schema(
         },
         building_name: {
             type: String,
-            re: [true, 'Please add a buildings name']
+            required: [true, 'Please add a buildings name']
         },
-        location: {
+        address: {
             required: [true, 'Please complete the location'],
             type: [{
                 state: {type: String,},
@@ -26,18 +26,28 @@ const damageSchema = new Schema(
                 references: {type: String,}
             }]
         },
-        general:{
+        general: {
             type: [{
                 phone:{type: String},
                 damageType: {type: [String]},
-                closingHour: {type: Number},
-                capacity:{type: Number},
-                victims:{type: Number},
+                infraType: {type: [String]},
+                useType: {type: [String]},
+                trapped:{type: Number},
                 injured:{type: Number},
                 missing:{type: Number},
                 deceased:{type: Number},
             }]
-        }, 
+        },
+        need: {
+            type: [String]
+        },
+        offer: {
+            type: [String]
+        },
+        status: {
+            type: String,
+            enum: ['PENDING', 'APPROVED', 'DENIED']
+        }
     },
     {
         timestamps: true
