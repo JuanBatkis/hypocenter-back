@@ -16,7 +16,7 @@ const { veryToken } = require("../utils/auth");
 router.post("/", veryToken, (req, res, next)=>{
     const { _id: _colaborator } = req.user; 
 
-    ShelterEntry.create({...re.body, _colab})
+    ShelterEntry.create({...req.body, _colab})
         .then((shelterEnt)=>{
             res.status(200).json({result:shelterEnt});
         })
