@@ -42,12 +42,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Is best practice to add prefix api
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const propertyRouter = require('./routes/property');
-const reservationRouter = require('./routes/reservation');
 
 app.use('/api', indexRouter);
 app.use('/api/user', usersRouter);
-app.use('/api/property', propertyRouter);
-app.use('/api/reservation', reservationRouter);
 
 module.exports = app;
