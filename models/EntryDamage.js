@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 //Schema = Schema
 const {Schema} = mongoose;
 
-const shelterSchema = new Schema(
+const damageSchema = new Schema(
     {
-        _colaborator:{
-            type:Schema.Types.ObjectId, 
-            ref:"User", 
-            required:[true,'We´d like to know whos helping us'] 
+        _colaborator: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: [true, 'We´d like to know whos helping us'],
         },
         building_name: {
             type: String,
-            re: [true, 'Please add a building´s name']
+            required: [true, 'Please add a building´s name']
         },
-        location: {
+        address: {
             required: [true, 'Please add an addres'],
             type: [{
                 state: {type: String,},
@@ -22,22 +22,22 @@ const shelterSchema = new Schema(
                 municipality: {type: String},
                 zipCode: {type: Number},
                 streetName: {type: String},
+                streetNumber: {type: Number},
                 references: {type: String,}
-            }],
-         },
-        general:{
-            type: [{
-                phone:{type:Number},
-                openingHour: {type:String},
-                closingHour: {type:String},
-                capacity:{type:Number},
-                victims:{type:Number},
-                injured:{type:Number},
-                missing:{type:Number},
-                deceased:{type:Number},
             }]
-
-        }, 
+        },
+        general: {
+            type: [{
+                phone:{type: String},
+                damageType: {type: [String]},
+                infraType: {type: [String]},
+                useType: {type: [String]},
+                trapped:{type: Number},
+                injured:{type: Number},
+                missing:{type: Number},
+                deceased:{type: Number},
+            }]
+        },
         need: {
             type: [String]
         },
@@ -58,4 +58,4 @@ const shelterSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model('EntryShelter', shelterSchema);
+module.exports = mongoose.model('Damage', damageSchema);

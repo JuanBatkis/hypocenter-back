@@ -13,7 +13,7 @@ const { veryToken } = require("../utils/auth");
 */
 
 // Create an entry
-router.post("/", veryToken, (req, res, next)=>{
+router.post("/entry-shelter", veryToken, (req, res, next)=>{
     const { _id: _colaborator } = req.user; 
 
     ShelterEntry.create({...req.body, _colab})
@@ -28,10 +28,10 @@ router.post("/", veryToken, (req, res, next)=>{
 // Read entries
 
 // Dinamic filter
-router.get("/", veryToken, (req, res, next)=>{
+router.get("/entry-shelter", veryToken, (req, res, next)=>{
     // req.query = {key:"value"}
 ShelterEntry.find(req.query)
-    .populate("_colab","email name") //<----- Populate
+    .populate("_colaborator","name last_name") //<----- Populate
     .then((shelterentries)=>{
         res.status(200).json({result:shelterEntries})
     })
@@ -48,7 +48,7 @@ router.get("/:id", veryToken, (req, res, next)=>{
     const { id } = req.params; 
 
     ShelterEntry.findById(id)
-        .populate("colab","email name") //<----- Populate
+        .populate("colaborator","name last_name") //<----- Populate
         .then((shelterEntry)=>{
             res.status(200).json({result:shelterEntry})
         })
@@ -61,7 +61,7 @@ router.get("/:id", veryToken, (req, res, next)=>{
 router.patch("/:id", veryToken,(req,res, next)=>{
     const { id } = req.params; 
     ShelterEntry.findByIdAndUpdate(id,req.body, { new:true })
-        .populate("colab","email name") //<----- Populate
+        .populate("colaborator","name last_name") //<----- Populate
         .then((shelterEntry)=>{
             res.status(200).json({result:shelterEntry})
     })
