@@ -13,6 +13,10 @@ const userSchema = new Schema(
             type: String,
             re: [true, 'Please add your last name']
         },
+        phone: {
+            type: String,
+            re: [true, 'Please add your last phone number']
+        },
         email: {
             type: String,
             required: [true, 'Please add your email'],
@@ -23,6 +27,9 @@ const userSchema = new Schema(
                     return items < 1;
                 },
             },
+        },
+        organization: {
+            type: String,
         },
         role: {
             type: String,
