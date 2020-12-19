@@ -10,7 +10,8 @@ exports.veryToken = (req, res, next) => {
     jwt.verify(token, process.env.SECRET, (error, decoded) => {
         if (error) return res.status(401).json({error});
 
-        User.findById(decoded.id).then((user) => {
+        User.findById(decoded.id)
+            .then((user) => {
             //We save the user in req.user, so we can use it anywhere
             req.user = user;
 
