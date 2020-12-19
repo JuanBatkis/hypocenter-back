@@ -62,7 +62,7 @@ router.get("/:id", veryToken, (req, res, next)=>{
 router.patch("/:id", veryToken,(req,res, next)=>{
     const { id } = req.params; 
     ShelterEntry.findByIdAndUpdate(id,req.body, { new:true })
-        .populate("colaborator","name last_name", "organisation") //<----- Populate
+        .populate("colaborator","name last_name organisation") //<----- Populate
         .then((shelterEntry)=>{
             res.status(200).json({result:shelterEntry})
     })

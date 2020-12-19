@@ -31,7 +31,7 @@ router.post("/", veryToken, (req, res, next)=>{
 router.get("/", veryToken, (req, res, next)=>{
     // req.query = {key:"value"}
 DamageEntry.find(req.query)
-    .populate("_colaborator","name last_name", "organization") //<----- Populate
+    .populate("_colaborator","name last_name organization") //<----- Populate
     .then((damageEntries)=>{
         res.status(200).json({result:damageEntries})
     })
@@ -48,7 +48,7 @@ router.get("/:id", veryToken, (req, res, next)=>{
     const { id } = req.params; 
 
     DamageEntry.findById(id)
-        .populate("colaborator","name last_name", "organization") //<----- Populate
+        .populate("colaborator","name last_name organization") //<----- Populate
         .then((damageEntry)=>{
             res.status(200).json({result:damageEntry})
         })
@@ -61,7 +61,7 @@ router.get("/:id", veryToken, (req, res, next)=>{
 router.patch("/:id", veryToken,(req,res, next)=>{
     const { id } = req.params; 
     damageEntry.findByIdAndUpdate(id,req.body, { new:true })
-        .populate("colaborator","name last_name") //<----- Populate
+        .populate("colaborator","name last_name organization") //<----- Populate
         .then((damageEntry)=>{
             res.status(200).json({result:damageEntry})
     })
