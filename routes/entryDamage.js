@@ -2,8 +2,8 @@ const express = require ('express');
 const router = express.Router();
 
 //Import the important things
-const ShelterEntry = require("../models/EntryShelter");
-const { veryToken, checkRole } = require("../utils/auth");
+const ShelterEntry = require("../models/EntryDamage");
+const { veryToken } = require("../utils/auth");
 
 /* GET property page. 
     C = Create /
@@ -16,9 +16,9 @@ const { veryToken, checkRole } = require("../utils/auth");
 router.post("/", veryToken, (req, res, next)=>{
     const { _id: _colaborator } = req.user; 
 
-    ShelterEntry.create({...req.body, _colaborator})
-        .then((shelterEnt)=>{
-            res.status(200).json({result:shelterEnt});
+    DamageEntry.create({...req.body, _colaborator})
+        .then((damageEnt)=>{
+            res.status(200).json({result:damageEnt});
         })
         .catch((error)=>{
             res.status(400).json({msg:"Something went wrong", error});
@@ -30,10 +30,10 @@ router.post("/", veryToken, (req, res, next)=>{
 // Dinamic filter
 router.get("/", veryToken, (req, res, next)=>{
     // req.query = {key:"value"}
-ShelterEntry.find(req.query)
+DamageEntry.find(req.query)
     .populate("_colaborator","name last_name", "organization") //<----- Populate
-    .then((shelterentries)=>{
-        res.status(200).json({result:shelterEntries})
+    .then((damageEntries)=>{
+        res.status(200).json({result:damageEntries})
     })
     .catch((error)=>{
        res.status(400).json({msg:"Something went wrong", error});
@@ -47,10 +47,10 @@ router.get("/:id", veryToken, (req, res, next)=>{
     // req.params = {id:"7ewjhvc7sw53tkbfw97"}
     const { id } = req.params; 
 
-    ShelterEntry.findById(id)
+    DamageEntry.findById(id)
         .populate("colaborator","name last_name", "organization") //<----- Populate
-        .then((shelterEntry)=>{
-            res.status(200).json({result:shelterEntry})
+        .then((damageEntry)=>{
+            res.status(200).json({result:damageEntry})
         })
         .catch((error)=>{
             res.status(400).json({msg:"Something went wrong", error})
@@ -60,10 +60,10 @@ router.get("/:id", veryToken, (req, res, next)=>{
 // Edit or update a shelter entry
 router.patch("/:id", veryToken,(req,res, next)=>{
     const { id } = req.params; 
-    ShelterEntry.findByIdAndUpdate(id,req.body, { new:true })
-        .populate("colaborator","name last_name", "organisation") //<----- Populate
-        .then((shelterEntry)=>{
-            res.status(200).json({result:shelterEntry})
+    damageEntry.findByIdAndUpdate(id,req.body, { new:true })
+        .populate("colaborator","name last_name") //<----- Populate
+        .then((damageEntry)=>{
+            res.status(200).json({result:damageEntry})
     })
         .catch((error)=>{
             res.status(400).json({msg:"Something went wrongSomething went wrong", error})
@@ -71,9 +71,9 @@ router.patch("/:id", veryToken,(req,res, next)=>{
 }); 
 
 // Delete an entry
-router.delete("/:id", veryToken, checkRole(["ADMIN"]), (req,res, next)=>{
+router.delete("/:id", veryToken,(req,res, next)=>{
     const { id } = req.params; 
-    ShelterEntry.findByIdAndDelete(id)
+    DamageEntry.findByIdAndDelete(id)
         .then(()=>{
             res.status(200).json({msg:"Shelter entry was deleted"})
         })
