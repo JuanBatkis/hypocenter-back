@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const {clearRes} = require('../utils/auth');
+const { veryToken, checkRole } = require("../utils/auth");
 
 
 //POST Sign Up
@@ -68,6 +69,31 @@ router.post('/login', (req, res, next) => {
 router.post('/logout', (req, res) => {
 	res.clearCookie('token').json({msg: 'Come back soon!'});
 })
+
+// Change Role
+router.post("/:id", veryToken, checkRole(["ADMIN"]), (req,res, next)=>{
+    const { id } = req.params; 
+    User.findById(id)
+        .then((user)=>{
+			user.role="ADMIN";
+            res.status(200).json({msg:"User now has the role Admin"})
+        })
+        .catch((error)=>{
+            res.status(400).json({msg:"Something went wrong", error})
+        })
+}); 
+
+// Delete an user
+router.delete("/:id", veryToken, checkRole(["ADMIN"]), (req,res, next)=>{
+    const { id } = req.params; 
+    User.findByIdAndDelete(id)
+        .then(()=>{
+            res.status(200).json({msg:"User was deleted"})
+        })
+        .catch((error)=>{
+            res.status(400).json({msg:"Something went wrong", error})
+        })
+}); 
 
 
 module.exports = router;

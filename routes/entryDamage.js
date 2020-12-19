@@ -2,7 +2,7 @@ const express = require ('express');
 const router = express.Router();
 
 //Import the important things
-const ShelterEntry = require("../models/EntryDamage");
+const DamageEntry = require("../models/EntryDamage");
 const { veryToken } = require("../utils/auth");
 
 /* GET property page. 

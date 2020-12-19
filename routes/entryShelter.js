@@ -31,8 +31,8 @@ router.post("/", veryToken, (req, res, next)=>{
 router.get("/", veryToken, (req, res, next)=>{
     // req.query = {key:"value"}
 ShelterEntry.find(req.query)
-    .populate("_colaborator","name last_name", "organization") //<----- Populate
-    .then((shelterentries)=>{
+    .populate("_colaborator","name last_name organization") //<----- Populate
+    .then((shelterEntries)=>{
         res.status(200).json({result:shelterEntries})
     })
     .catch((error)=>{
@@ -42,14 +42,15 @@ ShelterEntry.find(req.query)
 
 // Traer uno solo, por id 
 router.get("/:id", veryToken, (req, res, next)=>{
-
+    console.log(req.params)
     // :id = "7ewjhvc7sw53tkbfw97"
     // req.params = {id:"7ewjhvc7sw53tkbfw97"}
     const { id } = req.params; 
 
     ShelterEntry.findById(id)
-        .populate("colaborator","name last_name", "organization") //<----- Populate
+        .populate("_colaborator","name last_name organization") //<----- Populate
         .then((shelterEntry)=>{
+            console.log(shelterEntry)
             res.status(200).json({result:shelterEntry})
         })
         .catch((error)=>{
