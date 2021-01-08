@@ -24,7 +24,7 @@ const shelterSchema = new Schema(
                 streetName: {type: String},
                 references: {type: String,}
             }],
-         },
+        },
         general:{
             type: [{
                 phone:{type:Number},
