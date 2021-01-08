@@ -7,15 +7,15 @@ const userSchema = new Schema(
     {
         name: {
             type: String,
-            re: [true, 'Please add your name']
+            required: [true, 'Please add your name']
         },
         last_name: {
             type: String,
-            re: [true, 'Please add your last name']
+            required: [true, 'Please add your last name']
         },
         phone: {
             type: String,
-            re: [true, 'Please add your last phone number']
+            required: [true, 'Please add your phone number']
         },
         email: {
             type: String,
