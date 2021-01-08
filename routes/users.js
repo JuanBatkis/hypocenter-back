@@ -22,7 +22,10 @@ router.post('/signup', (req, res, next) => {
 		User.create(user).then(() => {
 			res.status(200).json({msg: 'User created'});
 		}).catch((error) => {
-			res.status(400).json({msg: 'An error occurred', error});
+			//Get the specific error message
+			//First, we turn the error object into an array and then we map the specific error message of each entry
+			const validationError = Object.values(error.errors).map(type => type.properties.message);
+			res.status(400).json({msg: 'An error occurred', error, validationError});
 		});
 
 	});
