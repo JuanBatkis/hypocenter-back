@@ -7,11 +7,15 @@ const userSchema = new Schema(
     {
         name: {
             type: String,
-            re: [true, 'Please add your name']
+            required: [true, 'Please add your name']
         },
         last_name: {
             type: String,
-            re: [true, 'Please add your last name']
+            required: [true, 'Please add your last name']
+        },
+        phone: {
+            type: String,
+            required: [true, 'Please add your phone number']
         },
         email: {
             type: String,
@@ -23,6 +27,9 @@ const userSchema = new Schema(
                     return items < 1;
                 },
             },
+        },
+        organization: {
+            type: String,
         },
         role: {
             type: String,
