@@ -52,4 +52,8 @@ app.use('/api/user', usersRouter);
 app.use('/api/entry-shelter', shelterRouter);
 app.use('/api/entry-damage', damageRouter);
 
+app.use("*", (req,res)=>{
+    res.sendFile(path.join(__dirname, "public","index.html"));
+});
+
 module.exports = app;
