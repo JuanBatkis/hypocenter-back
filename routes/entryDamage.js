@@ -14,7 +14,7 @@ const { veryToken } = require("../utils/auth");
 
 // Create an entry
 router.post("/", veryToken, (req, res, next)=>{
-    const { _id: _colaborator } = req.user; 
+    const { _id: _colaborator } = req.user;
 
     DamageEntry.create({...req.body, _colaborator})
         .then((damageEnt)=>{

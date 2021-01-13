@@ -17,8 +17,8 @@ const damageSchema = new Schema(
         location: {
             required: [true, 'Please add an addres'],
             type: [{
-                state: {type: String,},
                 city: {type: String},
+                state: {type: String,},
                 municipality: {type: String},
                 zipCode: {type: Number},
                 streetName: {type: String},
