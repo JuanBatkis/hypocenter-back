@@ -16,26 +16,69 @@ const damageSchema = new Schema(
         },
         location: {
             required: [true, 'Please add an addres'],
-            type: [{
-                state: {type: String,},
-                city: {type: String},
-                municipality: {type: String},
-                zipCode: {type: Number},
-                streetName: {type: String},
-                references: {type: String,}
-            }]
+            type: {
+                city: {
+                    type: String,
+                    required: [true, 'Please add a city']
+                },
+                state: {
+                    type: String,
+                    required: [true, 'Please add a state']
+                },
+                municipality: {
+                    type: String,
+                    required: [true, 'Please add a municipality']
+                },
+                zipCode: {
+                    type: Number,
+                    required: [true, 'Please add a zip code']
+                },
+                streetName: {
+                    type: String,
+                    required: [true, 'Please add a street name']
+                },
+                references: {
+                    type: String,
+                    required: [true, 'Please add a reference']
+                }
+            }
         },
         general: {
-            type: [{
-                phone:{type: String},
-                damageType: {type: [String]},
-                infraType: {type: [String]},
-                useType: {type: [String]},
-                trapped:{type: Number},
-                injured:{type: Number},
-                missing:{type: Number},
-                deceased:{type: Number},
-            }]
+            required: [true, 'Please add general info'],
+            type: {
+                phone:{
+                    type: String,
+                    required: [true, 'Please add a phone']
+                },
+                damageType: {
+                    type: [String],
+                    required: [true, 'Please add a damage type']
+                },
+                infraType: {
+                    type: [String],
+                    required: [true, 'Please add a infrastructure type']
+                },
+                useType: {
+                    type: [String],
+                    required: [true, 'Please add a use type']
+                },
+                trapped:{
+                    type: Number,
+                    required: [true, 'Please add a trapped number']
+                },
+                injured:{
+                    type: Number,
+                    required: [true, 'Please add a injured number']
+                },
+                missing:{
+                    type: Number,
+                    required: [true, 'Please add a missing number']
+                },
+                deceased:{
+                    type: Number,
+                    required: [true, 'Please add a deceased number']
+                }
+            }
         },
         need: {
             type: [String]

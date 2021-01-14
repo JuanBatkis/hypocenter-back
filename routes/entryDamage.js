@@ -14,7 +14,9 @@ const { veryToken } = require("../utils/auth");
 
 // Create an entry
 router.post("/", veryToken, (req, res, next)=>{
-    const { _id: _colaborator } = req.user; 
+    const { _id: _colaborator } = req.user;
+
+    console.log(req.body);
 
     DamageEntry.create({...req.body, _colaborator})
         .then((damageEnt)=>{
@@ -36,7 +38,7 @@ DamageEntry.find(req.query)
         res.status(200).json({result:damageEntries})
     })
     .catch((error)=>{
-       res.status(400).json({msg:"Something went wrong", error});
+        res.status(400).json({msg:"Something went wrong", error});
     });
 });
 
