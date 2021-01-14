@@ -12,31 +12,68 @@ const shelterSchema = new Schema(
         },
         building_name: {
             type: String,
-            re: [true, 'Please add a building´s name']
+            required: [true, 'Please add a building´s name']
         },
         location: {
             required: [true, 'Please add an addres'],
-            type: [{
-                state: {type: String,},
-                city: {type: String},
-                municipality: {type: String},
-                zipCode: {type: Number},
-                streetName: {type: String},
-                references: {type: String,}
-            }],
+            type: {
+                city: {
+                    type: String,
+                    required: [true, 'Please add a city']
+                },
+                state: {
+                    type: String,
+                    required: [true, 'Please add a state']
+                },
+                municipality: {
+                    type: String,
+                    required: [true, 'Please add a municipality']
+                },
+                zipCode: {
+                    type: Number,
+                    required: [true, 'Please add a zip code']
+                },
+                streetName: {
+                    type: String,
+                    required: [true, 'Please add a street name']
+                },
+                references: {
+                    type: String,
+                    required: [true, 'Please add a reference']
+                }
+            }
         },
         general:{
-            type: [{
-                phone:{type:Number},
-                openingHour: {type:String},
-                closingHour: {type:String},
-                capacity:{type:Number},
-                victims:{type:Number},
-                injured:{type:Number},
-                missing:{type:Number},
-                deceased:{type:Number},
-            }]
-
+            type: {
+                phone:{
+                    type: String,
+                    required: [true, 'Please add a phone']
+                },
+                openingHour: {
+                    type:String,
+                    required: [true, 'Please add the opening hour']
+                },
+                closingHour: {
+                    type:String,
+                    required: [true, 'Please add the closing hour']
+                },
+                capacity:{
+                    type:Number,
+                    required: [true, 'Please add a capacity number']
+                },
+                injured:{
+                    type: Number,
+                    required: [true, 'Please add a injured number']
+                },
+                missing:{
+                    type: Number,
+                    required: [true, 'Please add a missing number']
+                },
+                deceased:{
+                    type: Number,
+                    required: [true, 'Please add a deceased number']
+                }
+            }
         }, 
         need: {
             type: [String]

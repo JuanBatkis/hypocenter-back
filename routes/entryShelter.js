@@ -36,7 +36,7 @@ ShelterEntry.find(req.query)
         res.status(200).json({result:shelterEntries})
     })
     .catch((error)=>{
-       res.status(400).json({msg:"Something went wrong", error});
+        res.status(400).json({msg:"Something went wrong", error});
     });
 });
 
