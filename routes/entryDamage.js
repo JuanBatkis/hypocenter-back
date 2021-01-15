@@ -16,8 +16,6 @@ const { veryToken } = require("../utils/auth");
 router.post("/", veryToken, (req, res, next)=>{
     const { _id: _colaborator } = req.user;
 
-    console.log(req.body);
-
     DamageEntry.create({...req.body, _colaborator})
         .then((damageEnt)=>{
             res.status(200).json({result:damageEnt});
@@ -29,17 +27,31 @@ router.post("/", veryToken, (req, res, next)=>{
 
 // Read entries
 
+// Get all user entries
+router.get("/my-entries", veryToken, (req, res, next)=>{
+    const { _id: _colaborator } = req.user;
+    //console.log(_colaborator);
+    DamageEntry.find({'_colaborator': _colaborator})
+        .populate("_colaborator","name last_name organization") //<----- Populate
+        .then((damageEntries)=>{
+            res.status(200).json({result:damageEntries})
+        })
+        .catch((error)=>{
+            res.status(400).json({msg:"Something went wrong", error});
+        });
+});
+
 // Dinamic filter
 router.get("/", veryToken, (req, res, next)=>{
     // req.query = {key:"value"}
-DamageEntry.find(req.query)
-    .populate("_colaborator","name last_name organization") //<----- Populate
-    .then((damageEntries)=>{
-        res.status(200).json({result:damageEntries})
-    })
-    .catch((error)=>{
-        res.status(400).json({msg:"Something went wrong", error});
-    });
+    DamageEntry.find(req.query)
+        .populate("_colaborator","name last_name organization") //<----- Populate
+        .then((damageEntries)=>{
+            res.status(200).json({result:damageEntries})
+        })
+        .catch((error)=>{
+            res.status(400).json({msg:"Something went wrong", error});
+        });
 });
 
 // Traer uno solo, por id 
