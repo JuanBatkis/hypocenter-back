@@ -45,7 +45,7 @@ router.get("/my-entries", veryToken, (req, res, next)=>{
 router.get("/", veryToken, (req, res, next)=>{
     // req.query = {key:"value"}
     DamageEntry.find(req.query)
-        .populate("_colaborator","name last_name organization") //<----- Populate
+        .populate("_colaborator","name last_name organization phone email role") //<----- Populate
         .then((damageEntries)=>{
             res.status(200).json({result:damageEntries})
         })
@@ -71,7 +71,7 @@ router.get("/:id", veryToken, (req, res, next)=>{
         }); 
 });
 
-// Edit or update a shelter entry
+// Edit or update a damage entry
 router.patch("/:id", veryToken,(req,res, next)=>{
     const { id } = req.params; 
     damageEntry.findByIdAndUpdate(id,req.body, { new:true })
@@ -86,10 +86,10 @@ router.patch("/:id", veryToken,(req,res, next)=>{
 
 // Delete an entry
 router.delete("/:id", veryToken,(req,res, next)=>{
-    const { id } = req.params; 
+    const { id } = req.params;
     DamageEntry.findByIdAndDelete(id)
         .then(()=>{
-            res.status(200).json({msg:"Shelter entry was deleted"})
+            res.status(200).json({msg:"Damage entry was deleted"})
         })
         .catch((error)=>{
             res.status(400).json({msg:"Something went wrong", error})

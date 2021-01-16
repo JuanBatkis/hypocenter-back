@@ -46,7 +46,7 @@ router.get("/", veryToken, (req, res, next)=>{
     // req.query = {key:"value"}
     //console.log(req.query);
     ShelterEntry.find(req.query)
-        .populate("_colaborator","name last_name organization") //<----- Populate
+        .populate("_colaborator","name last_name organization phone email role") //<----- Populate
         .then((shelterEntries)=>{
             res.status(200).json({result:shelterEntries})
         })
