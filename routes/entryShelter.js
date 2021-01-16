@@ -30,7 +30,6 @@ router.post("/", veryToken, (req, res, next)=>{
 // Get all user entries
 router.get("/my-entries", veryToken, (req, res, next)=>{
     const { _id: _colaborator } = req.user;
-    //console.log(_colaborator);
     ShelterEntry.find({'_colaborator': _colaborator})
         .populate("_colaborator","name last_name organization") //<----- Populate
         .then((shelterEntries)=>{
@@ -42,9 +41,9 @@ router.get("/my-entries", veryToken, (req, res, next)=>{
 });
 
 // Dinamic filter
-router.get("/", veryToken, (req, res, next)=>{
+//router.get("/", veryToken, (req, res, next)=>{
+router.get("/", (req, res, next)=>{
     // req.query = {key:"value"}
-    //console.log(req.query);
     ShelterEntry.find(req.query)
         .populate("_colaborator","name last_name organization phone email role") //<----- Populate
         .then((shelterEntries)=>{
@@ -57,7 +56,6 @@ router.get("/", veryToken, (req, res, next)=>{
 
 // Traer uno solo, por id 
 router.get("/:id", veryToken, (req, res, next)=>{
-    //console.log(req.params)
     // :id = "7ewjhvc7sw53tkbfw97"
     // req.params = {id:"7ewjhvc7sw53tkbfw97"}
     const { id } = req.params; 
@@ -65,7 +63,6 @@ router.get("/:id", veryToken, (req, res, next)=>{
     ShelterEntry.findById(id)
         .populate("_colaborator","name last_name organization") //<----- Populate
         .then((shelterEntry)=>{
-            console.log(shelterEntry)
             res.status(200).json({result:shelterEntry})
         })
         .catch((error)=>{

@@ -30,7 +30,6 @@ router.post("/", veryToken, (req, res, next)=>{
 // Get all user entries
 router.get("/my-entries", veryToken, (req, res, next)=>{
     const { _id: _colaborator } = req.user;
-    //console.log(_colaborator);
     DamageEntry.find({'_colaborator': _colaborator})
         .populate("_colaborator","name last_name organization") //<----- Populate
         .then((damageEntries)=>{
@@ -42,9 +41,8 @@ router.get("/my-entries", veryToken, (req, res, next)=>{
 });
 
 // Dinamic filter
-router.get("/", veryToken, (req, res, next)=>{
-    // req.query = {key:"value"}
-    console.log(req.query)
+//router.get("/", veryToken, (req, res, next)=>{
+router.get("/", (req, res, next)=>{
     DamageEntry.find(req.query)
         .populate("_colaborator","name last_name organization phone email role") //<----- Populate
         .then((damageEntries)=>{
