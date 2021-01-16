@@ -14,7 +14,7 @@ const { veryToken, checkRole } = require("../utils/auth");
 
 // Create an entry
 router.post("/", veryToken, (req, res, next)=>{
-    const { _id: _colaborator } = req.user; 
+    const { _id: _colaborator } = req.user;
 
     ShelterEntry.create({...req.body, _colaborator})
         .then((shelterEnt)=>{
@@ -27,22 +27,37 @@ router.post("/", veryToken, (req, res, next)=>{
 
 // Read entries
 
+// Get all user entries
+router.get("/my-entries", veryToken, (req, res, next)=>{
+    const { _id: _colaborator } = req.user;
+    //console.log(_colaborator);
+    ShelterEntry.find({'_colaborator': _colaborator})
+        .populate("_colaborator","name last_name organization") //<----- Populate
+        .then((shelterEntries)=>{
+            res.status(200).json({result:shelterEntries})
+        })
+        .catch((error)=>{
+            res.status(400).json({msg:"Something went wrong", error});
+        });
+});
+
 // Dinamic filter
 router.get("/", veryToken, (req, res, next)=>{
     // req.query = {key:"value"}
-ShelterEntry.find(req.query)
-    .populate("_colaborator","name last_name organization") //<----- Populate
-    .then((shelterEntries)=>{
-        res.status(200).json({result:shelterEntries})
-    })
-    .catch((error)=>{
-       res.status(400).json({msg:"Something went wrong", error});
-    });
+    //console.log(req.query);
+    ShelterEntry.find(req.query)
+        .populate("_colaborator","name last_name organization phone email role") //<----- Populate
+        .then((shelterEntries)=>{
+            res.status(200).json({result:shelterEntries})
+        })
+        .catch((error)=>{
+            res.status(400).json({msg:"Something went wrong", error});
+        });
 });
 
 // Traer uno solo, por id 
 router.get("/:id", veryToken, (req, res, next)=>{
-    console.log(req.params)
+    //console.log(req.params)
     // :id = "7ewjhvc7sw53tkbfw97"
     // req.params = {id:"7ewjhvc7sw53tkbfw97"}
     const { id } = req.params; 
