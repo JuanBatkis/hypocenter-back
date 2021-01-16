@@ -44,6 +44,7 @@ router.get("/my-entries", veryToken, (req, res, next)=>{
 // Dinamic filter
 router.get("/", veryToken, (req, res, next)=>{
     // req.query = {key:"value"}
+    console.log(req.query)
     DamageEntry.find(req.query)
         .populate("_colaborator","name last_name organization phone email role") //<----- Populate
         .then((damageEntries)=>{
@@ -74,7 +75,7 @@ router.get("/:id", veryToken, (req, res, next)=>{
 // Edit or update a damage entry
 router.patch("/:id", veryToken,(req,res, next)=>{
     const { id } = req.params; 
-    damageEntry.findByIdAndUpdate(id,req.body, { new:true })
+    DamageEntry.findByIdAndUpdate(id,req.body, { new:true })
         .populate("colaborator","name last_name organization") //<----- Populate
         .then((damageEntry)=>{
             res.status(200).json({result:damageEntry})
